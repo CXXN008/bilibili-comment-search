@@ -1,4 +1,3 @@
-let oList
 dmLoad = () => fetch(`https://comment.bilibili.com/` + cid + `.xml`).then(d => d.text()).then(s => new DOMParser().parseFromString(s, `text/xml`)).then(x => window.danmaku = x)
 
 str_pad_left = (s, p, l) => {
@@ -18,7 +17,7 @@ searchDm = () => {
       console.log(result.childNodes[0].nodeValue, count++)
       result = nodes.iterateNext()
     }
-    oList = $(`#dm-list>li`)
+    window.oList = $(`#dm-list>li`)
     $(`#dm-count`)[0].innerText = count + `条结果`
   }else $(`#dm-count`)[0].innerHTML = `<font color="red">Missing keywords!<font>`
 }
@@ -49,8 +48,8 @@ dmSort = () => {
     }
   }else {
     $(`#dm-list>li`).remove()
-    if (undefined !== oList) {
-      oList.each((i, s) => $(`#dm-list`).append(s.outerHTML))
+    if (undefined !== window.oList) {
+      window.oList.each((i, s) => $(`#dm-list`).append(s.outerHTML))
       $(`#dm-sort`)[0].innerText = `视频时序`
     }
   }
@@ -60,7 +59,7 @@ if (window.danmaku === undefined) {
   dmLoad().then(() => {
     if ($(`#dm-query`).length === 0) {
       let d = document.createElement('div')
-      d.innerHTML = `<div style="margin:1rem" id="dm-query" onclick="searchDm()" class="bi-btn button" role="button"><span class="bpui-button-text"> 搜 索 </span></div><input id="dm-key" type="text" onkeydown='if(event.keyCode==13) searchDm()' placeholder="关键字" style="height:1.5rem;width:12rem;margin:1rem"><span id="dm-count">Data ready!</span><div style="margin:1rem" id="dm-sort" onclick="dmSort()" class="bi-btn button" role="button"><span class="bpui-button-text">视频时序</span></div><div style="margin:1rem" onclick="dmLoad().then(() => {$('#dm-list>li').remove();$('#dm-sort')[0].innerText='视频时序';$('#dm-count')[0].innerText='';oList=undefined})" class="bi-btn button" role="button"><span class="bpui-button-text">重载弹幕</span></div><div style="display:inline-block;width:100%;overflow:hidden;" id="dm-list"></div>`
+      d.innerHTML = `<div style="margin:1rem" id="dm-query" onclick="searchDm()" class="bi-btn button" role="button"><span class="bpui-button-text"> 搜 索 </span></div><input id="dm-key" type="text" onkeydown='if(event.keyCode==13) searchDm()' placeholder="关键字" style="height:1.5rem;width:12rem;margin:1rem"><span id="dm-count">Data ready!</span><div style="margin:1rem" id="dm-sort" onclick="dmSort()" class="bi-btn button" role="button"><span class="bpui-button-text">视频时序</span></div><div style="margin:1rem" onclick="dmLoad().then(() => {$('#dm-list>li').remove();$('#dm-sort')[0].innerText='视频时序';$('#dm-count')[0].innerText='';window.oList=undefined})" class="bi-btn button" role="button"><span class="bpui-button-text">重载弹幕</span></div><div style="display:inline-block;width:100%;overflow:hidden;" id="dm-list"></div>`
       document.getElementsByTagName('body')[0].insertBefore(d, document.getElementsByTagName('body')[0].firstChild)
     }
   })
