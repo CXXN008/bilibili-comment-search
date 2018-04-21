@@ -14,7 +14,7 @@ searchDm = () => {
     $(`#dm-list`).children().remove()
     while(result){
       let time = result.attributes[0].nodeValue.split(`,`)[0]
-      $(`#dm-list`).append(`<li style="margin:1rem;height:4rem;position: relative;display: inline-block;vertical-align: top;width: 8rem;cursor: pointer;background-color: #fff;border: 1px solid #e5e9ef;border-radius: 4px;padding: 8px;" value="` + time + `" onclick="player.seek(` + (time - 1) + `)"><h5 style="font-weight:bold">` + secondsToHms(time) + `</h5><p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp:3;overflow: hidden;height:3rem;width:8rem" title="` + result.childNodes[0].nodeValue + `">` + result.childNodes[0].nodeValue + `</p></li>`)
+      $(`#dm-list`).append(`<li style="margin:1rem;height:4rem;position: relative;display: inline-block;vertical-align: top;width: 8rem;cursor: pointer;background-color: #fff;border: 1px solid #e5e9ef;border-radius: 4px;padding: 8px;" value="` + time + `" onclick="player.seek(` + (time - 1) + `)"><h5 style="font-weight:bold!important">` + secondsToHms(time) + `</h5><a style="display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;height:3rem;width:8rem" title="` + result.childNodes[0].nodeValue + `">` + result.childNodes[0].nodeValue + `</a></li>`)
       console.log(result.childNodes[0].nodeValue, count++)
       result = nodes.iterateNext()
     }
