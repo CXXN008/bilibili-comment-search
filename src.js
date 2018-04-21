@@ -14,8 +14,7 @@ searchDm = () => {
     $(`#dm-list`).children().remove()
     while(result){
       let time = result.attributes[0].nodeValue.split(`,`)[0]
-
-      $(`#dm-list`).append(`<li style="margin:1rem;height:3rem" value="` + time + `" onclick="player.seek(` + (time - 1) + `)" class="episode-item"><h5>` + secondsToHms(time) + `</h5><p class="ep-title" title="` + result.childNodes[0].nodeValue + `" style="">` + result.childNodes[0].nodeValue + `</p></li>`)
+      $(`#dm-list`).append(`<li style="margin:1rem;height:4rem;position: relative;display: inline-block;vertical-align: top;width: 8rem;cursor: pointer;background-color: #fff;border: 1px solid #e5e9ef;border-radius: 4px;padding: 8px;" value="` + time + `" onclick="player.seek(` + (time - 1) + `)"><h5 style="align:center">` + secondsToHms(time) + `</h5><p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;height:3rem;width:8rem" title="` + result.childNodes[0].nodeValue + `">` + result.childNodes[0].nodeValue + `</p></li>`)
       console.log(result.childNodes[0].nodeValue, count++)
       result = nodes.iterateNext()
     }
@@ -61,8 +60,8 @@ if (window.danmaku === undefined) {
   dmLoad().then(() => {
     if ($(`#dm-query`).length === 0) {
       let d = document.createElement('div')
-      d.innerHTML = `<div style="margin:1rem" id="dm-query" onclick="searchDm()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text"> 搜 索 </span></div><input id="dm-key" type="text" placeholder="关键字" style="height:auto;width:12rem;margin:1rem"><span id="dm-count">Data ready!</span><div style="margin:1rem" id="dm-sort" onclick="dmSort()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text">视频时序</span></div><div style="margin:1rem" onclick="dmLoad().then(() => {$('#dm-list>li').remove();$('#dm-sort')[0].innerText='视频时序';$('#dm-count')[0].innerText='';oList=undefined})" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text">Reload</span></div><div id="dm-list"></div>`
-      $(`#bangumi_detail`).append(d)
+      d.innerHTML = `<div style="margin:1rem" id="dm-query" onclick="searchDm()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text"> 搜 索 </span></div><input id="dm-key" type="text" placeholder="关键字" style="height:auto;width:12rem;margin:1rem"><span id="dm-count">Data ready!</span><div style="margin:1rem" id="dm-sort" onclick="dmSort()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text">视频时序</span></div><div style="margin:1rem" onclick="dmLoad().then(() => {$('#dm-list>li').remove();$('#dm-sort')[0].innerText='视频时序';$('#dm-count')[0].innerText='';oList=undefined})" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text">Reload</span></div><div style="display:inline-block;width:100%;overflow:hidden;" id="dm-list"></div>`
+      document.getElementsByTagName('body')[0].insertBefore(d, document.getElementsByTagName('body')[0].firstChild)
     }
   })
 }
