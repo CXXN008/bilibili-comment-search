@@ -3,7 +3,9 @@ if (window.danmaku === undefined) {
   fetch(`https://comment.bilibili.com/` + cid + `.xml`).then(d => d.text()).then(s => new DOMParser().parseFromString(s, `text/xml`)).then(x => {
     window.danmaku = x
     if ($(`#dm-query`).length === 0) {
-      $(`#bangumi_detail`)[0].innerHTML += `<br/><div style="margin:1rem" id="dm-query" onclick="searchDm()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text"> 搜 ♂ 索 </span></div><input id="dm-key" type="text" placeholder="关键字" style="height:auto;width:12rem;margin:1rem"><span id="dm-count">Data ready!</span><div style="margin:1rem" id="dm-sort" onclick="dmSort()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text">视频时序</span></div><ul id="dm-list"></ul>`
+      let d = document.createElement('div')
+      d.innerHTML = `<div style="margin:1rem" id="dm-query" onclick="searchDm()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text"> 搜 索 </span></div><input id="dm-key" type="text" placeholder="关键字" style="height:auto;width:12rem;margin:1rem"><span id="dm-count">Data ready!</span><div style="margin:1rem" id="dm-sort" onclick="dmSort()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text">视频时序</span></div><div id="dm-list"></div>`
+      $(`#bangumi_detail`).append(d)
     }
   })
 }
