@@ -6,6 +6,7 @@ if (window.danmaku === undefined) {
     }
   })
 }
+
 str_pad_left = (s, p, l) => {
   return (new Array(l + 1).join(p) + s).slice(-l)
 }
@@ -26,7 +27,7 @@ searchDm = () => {
   $('#dm-count')[0].innerText = count + '条结果'
 }
 
-function secondsToHms (d) {
+secondsToHms = d => {
   d = Number(d)
   var h = Math.floor(d / 3600)
   var m = Math.floor(d % 3600 / 60)
@@ -38,7 +39,7 @@ function secondsToHms (d) {
   return str_pad_left(hDisplay, '0', 2) + ':' + str_pad_left(mDisplay, '0', 2) + ':' + str_pad_left(sDisplay, '0', 2)
 }
 
-function dmSort () {
+dmSort = () => {
   let sList = $('#dm-list>li').sort(function (a, b) {
     if (a.value == b.value) { return 0; }
     if (a.value > b.value) {
@@ -49,7 +50,7 @@ function dmSort () {
   })
   $('#dm-list>li').remove()
   sList.each((i, s) => {
-    console.log(i,s.outerHTML)
+    console.log(i, s.outerHTML)
     $('#dm-list').append(s.outerHTML)
   })
 }
