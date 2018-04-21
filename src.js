@@ -8,7 +8,7 @@ str_pad_left = (s, p, l) => {
 searchDm = () => {
   if ($(`#dm-key`)[0].value.trim() !== ``) {
     $(`#dm-sort`)[0].innerText = `视频时序`
-    let nodes = window.danmaku.evaluate('//d[contains(text(),' + $(`#dm-key`)[0].value + ')]', window.danmaku, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null)
+    let nodes = window.danmaku.evaluate('//d[contains(text(),\'' + $(`#dm-key`)[0].value + '\')]', window.danmaku, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null)
     let result = nodes.iterateNext()
     let count = 0
     $(`#dm-list`).children().remove()
