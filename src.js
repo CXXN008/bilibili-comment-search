@@ -17,7 +17,6 @@ searchDm = () => {
   let count = 0
   $('#dm-list').children().remove()
   while(result){
-    // console.log(result,count++)
     let time = result.attributes[0].nodeValue.split(',')[0]
 
     $('#dm-list').append('<li style="margin:1rem;height:3rem" value="' + time + '" onclick="player.seek(' + (time - 1) + ')" class="episode-item"><h5>' + secondsToHms(time) + '</h5><p class="ep-title" title="' + result.childNodes[0].nodeValue + '" style="">' + result.childNodes[0].nodeValue + '</p></li>')
