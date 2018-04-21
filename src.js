@@ -1,14 +1,5 @@
 let oList
-if (window.danmaku === undefined) {
-  fetch(`https://comment.bilibili.com/` + cid + `.xml`).then(d => d.text()).then(s => new DOMParser().parseFromString(s, `text/xml`)).then(x => {
-    window.danmaku = x
-    if ($(`#dm-query`).length === 0) {
-      let d = document.createElement('div')
-      d.innerHTML = `<div style="margin:1rem" id="dm-query" onclick="searchDm()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text"> 搜 索 </span></div><input id="dm-key" type="text" placeholder="关键字" style="height:auto;width:12rem;margin:1rem"><span id="dm-count">Data ready!</span><div style="margin:1rem" id="dm-sort" onclick="dmSort()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text">视频时序</span></div><div id="dm-list"></div>`
-      $(`#bangumi_detail`).append(d)
-    }
-  })
-}
+dmLoad = () => fetch(`https://comment.bilibili.com/` + cid + `.xml`).then(d => d.text()).then(s => new DOMParser().parseFromString(s, `text/xml`)).then(x => window.danmaku = x)
 
 str_pad_left = (s, p, l) => {
   return (new Array(l + 1).join(p) + s).slice(-l)
@@ -48,16 +39,30 @@ dmSort = () => {
   if ($(`#dm-sort`)[0].innerText === `视频时序`) {
     let sList = $(`#dm-list>li`).sort(function (a, b) {
       if (a.value == b.value) return 0
-      if (a.value > b.value)
-        return 1
+      if (a.value > b.value) return 1
       else return -1
     })
     $(`#dm-list>li`).remove()
-    sList.each((i, s) => $(`#dm-list`).append(s.outerHTML))
-    $(`#dm-sort`)[0].innerText = `发送时序`
+    if (0 < sList.length) {
+      console.log(sList)
+      sList.each((i, s) => $(`#dm-list`).append(s.outerHTML))
+      $(`#dm-sort`)[0].innerText = `发送时序`
+    }
   }else {
     $(`#dm-list>li`).remove()
-    oList.each((i, s) => $(`#dm-list`).append(s.outerHTML))
-    $(`#dm-sort`)[0].innerText = `视频时序`
+    if (undefined !== oList) {
+      oList.each((i, s) => $(`#dm-list`).append(s.outerHTML))
+      $(`#dm-sort`)[0].innerText = `视频时序`
+    }
   }
+}
+
+if (window.danmaku === undefined) {
+  dmLoad().then(() => {
+    if ($(`#dm-query`).length === 0) {
+      let d = document.createElement('div')
+      d.innerHTML = `<div style="margin:1rem" id="dm-query" onclick="searchDm()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text"> 搜 索 </span></div><input id="dm-key" type="text" placeholder="关键字" style="height:auto;width:12rem;margin:1rem"><span id="dm-count">Data ready!</span><div style="margin:1rem" id="dm-sort" onclick="dmSort()" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text">视频时序</span></div><div style="margin:1rem" onclick="dmLoad().then(() => {$('#dm-list>li').remove();$('#dm-sort')[0].innerText='视频时序';$('#dm-count')[0].innerText='';oList=undefined})" class="bpui-component bpui-button button" role="button"><span class="bpui-button-text">Reload</span></div><div id="dm-list"></div>`
+      $(`#bangumi_detail`).append(d)
+    }
+  })
 }
